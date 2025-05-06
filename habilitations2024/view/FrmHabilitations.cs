@@ -24,23 +24,15 @@ namespace habilitations2024.view
         /// <summary>
         /// Objet pour gérer la liste des développeurs
         /// </summary>
-        private readonly BindingSource bdgDeveloppeurs = new BindingSource();
+        private BindingSource bdgDeveloppeurs = new BindingSource();
         /// <summary>
         /// Objet pour gérer la liste des profils
         /// </summary>
-        private readonly BindingSource bdgProfils = new BindingSource();
+        private BindingSource bdgProfils = new BindingSource();
         /// <summary>
         /// Controleur de la fenêtre
         /// </summary>
         private FrmHabilitationsController controller;
-        /// <summary>
-        /// Titre des fenêtres d'information
-        /// </summary>
-        private readonly String titreFenetreInformation = "Information";
-        /// <summary>
-        /// profil particulier "admin" qui ne peut pas être supprimé
-        /// </summary>
-        private const string ADMIN = "admin";
 
         /// <summary>
         /// construction des composants graphiques et appel des autres initialisations
@@ -106,7 +98,7 @@ namespace habilitations2024.view
             }
             else
             {
-                MessageBox.Show("Une ligne doit être sélectionnée.", titreFenetreInformation);
+                MessageBox.Show("Une ligne doit être sélectionnée.", "Information");
             }
         }
 
@@ -128,7 +120,7 @@ namespace habilitations2024.view
             }
             else
             {
-                MessageBox.Show("Une ligne doit être sélectionnée.", titreFenetreInformation);
+                MessageBox.Show("Une ligne doit être sélectionnée.", "Information");
             }
         }
 
@@ -145,7 +137,7 @@ namespace habilitations2024.view
             }
             else
             {
-                MessageBox.Show("Une ligne doit être sélectionnée.", titreFenetreInformation);
+                MessageBox.Show("Une ligne doit être sélectionnée.", "Information");
             }
         }
 
@@ -179,7 +171,7 @@ namespace habilitations2024.view
             }
             else
             {
-                MessageBox.Show("Tous les champs doivent être remplis.", titreFenetreInformation);
+                MessageBox.Show("Tous les champs doivent être remplis.", "Information");
             }
         }
 
@@ -206,21 +198,14 @@ namespace habilitations2024.view
         {
             if (!txtPwd1.Text.Equals("") && !txtPwd2.Text.Equals("") && txtPwd1.Text.Equals(txtPwd2.Text))
             {
-                if (controller.PwdFort(txtPwd1.Text))
-                {
-                    Developpeur developpeur = (Developpeur)bdgDeveloppeurs.List[bdgDeveloppeurs.Position];
-                    developpeur.Pwd = txtPwd1.Text;
-                    controller.UpdatePwd(developpeur);
-                    EnCoursModifPwd(false);
-                }
-                else
-                {
-                    MessageBox.Show("Le pwd doit contenir entre 8 et 30 caractères constitués de : au moins une minuscule, une majuscule, un chiffre, un caractère spécial et pas d'espace", "Information");
-                }
+                Developpeur developpeur = (Developpeur)bdgDeveloppeurs.List[bdgDeveloppeurs.Position];
+                developpeur.Pwd = txtPwd1.Text;
+                controller.UpdatePwd(developpeur);
+                EnCoursModifPwd(false);
             }
             else
             {
-                MessageBox.Show("Les 2 zones doivent être remplies et de contenu identique", titreFenetreInformation);
+                MessageBox.Show("Les 2 zones doivent être remplies et de contenu identique", "Information");
             }
         }
 
@@ -269,55 +254,5 @@ namespace habilitations2024.view
             txtPwd2.Text = "";
         }
 
-        /// <summary>
-        /// Demande d'ajout d'un profil
-        /// à condition qu'il n'existe pas déjà
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void BtnAddProfil_Click(object sender, EventArgs e)
-        {
-            string nom = txtProfil.Text.ToString().ToLower();
-            if (string.IsNullOrEmpty(nom))
-            {
-                MessageBox.Show("Saisir un profil", "Information");
-            }
-            else if (cboProfil.Items.Cast<Profil>().Any(profil => profil.Nom == nom))
-            {
-                MessageBox.Show("Profil déjà présent dans la liste", "Information");
-            }
-            else
-            {
-                controller.AddProfil(new Profil(0, nom));
-                txtProfil.Text = "";
-                RemplirListeProfils();
-            }
-        }
-
-        /// <summary>
-        /// Demande de suppression d'un profil
-        /// à condition que ce ne soit pas le profil "admin"
-        /// et qu'il ne soit pas attribué
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void BtnDelProfil_Click(object sender, EventArgs e)
-        {
-            Profil profil = (Profil)bdgProfils.List[bdgProfils.Position];
-            if (profil.Nom.Equals(ADMIN))
-            {
-                MessageBox.Show("Le profil 'admin' ne peut pas être supprimé", "Information");
-            }
-            else if (((List<Developpeur>)bdgDeveloppeurs.DataSource).Exists(x => x.Profil.Idprofil == profil.Idprofil))
-            {
-                MessageBox.Show("Le profil " + profil.Nom + " ne peut pas être supprimé car il est utilisé");
-            }
-            else if (MessageBox.Show("Voulez-vous vraiment supprimer " + profil.Nom + " ?",
-                    "Confirmation de suppression", MessageBoxButtons.YesNo) == DialogResult.Yes)
-            {
-                controller.DelProfil(profil);
-                RemplirListeProfils();
-            }
-        }
     }
 }
