@@ -54,6 +54,7 @@ namespace habilitations2024.view
             RemplirListeProfils();
             EnCourseModifDeveloppeur(false);
             EnCoursModifPwd(false);
+            cmbProfilsFiltre.SelectedIndex = 0;
         }
 
         /// <summary>
@@ -77,6 +78,9 @@ namespace habilitations2024.view
             List<Profil> lesProfils = controller.GetLesProfils();
             bdgProfils.DataSource = lesProfils;
             cboProfil.DataSource = bdgProfils;
+            Profil profilVide = new Profil(0, "");
+            lesProfils.Insert(0, profilVide);
+            cmbProfilsFiltre.DataSource = lesProfils;
         }
 
         /// <summary>
@@ -254,5 +258,17 @@ namespace habilitations2024.view
             txtPwd2.Text = "";
         }
 
+        private void cmbProfilsFiltre_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            if (cmbProfilsFiltre.SelectedItem is Profil filtreProfil && filtreProfil.Idprofil != 0)
+            {
+                bdgDeveloppeurs.DataSource = controller.GetLesDeveloppeurs(filtreProfil);
+            }
+            else
+            {
+                bdgDeveloppeurs.DataSource = controller.GetLesDeveloppeurs();
+            }
+            dgvDeveloppeurs.DataSource = bdgDeveloppeurs;
+        }
     }
 }

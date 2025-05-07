@@ -35,10 +35,11 @@ namespace habilitations2024.controller
         /// Récupère et retourne les infos des développeurs
         /// </summary>
         /// <returns>liste des développeurs</returns>
-        public List<Developpeur> GetLesDeveloppeurs()
+        public List<Developpeur> GetLesDeveloppeurs(Profil nomProfilFiltre = null)
         {
-            return developpeurAccess.GetLesDeveloppeurs();
+            return developpeurAccess.GetLesDeveloppeurs(nomProfilFiltre);
         }
+
 
         /// <summary>
         /// Récupère et retourne les infos des profils
