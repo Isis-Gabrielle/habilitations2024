@@ -2,7 +2,7 @@
 using habilitations2024.model;
 using System;
 using System.Windows.Forms;
-
+using Serilog;
 namespace habilitations2024.view
 {
     /// <summary>

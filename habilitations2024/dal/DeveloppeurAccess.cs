@@ -1,4 +1,5 @@
 ﻿using habilitations2024.model;
+using Serilog;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -90,11 +91,15 @@ namespace habilitations2024.dal
                     {
                         records = access.Manager.ReqSelect(req);
                     }
-                        
+
                     if (records != null)
                     {
+                        Log.Debug("DeveloppeurAccess.GetLesDeveloppeurs : nombre d'enregistrements récupérés = {Count}", records.Count);
                         foreach (Object[] record in records)
                         {
+                            Log.Debug("DeveloppeurAccess.GetLesDeveloppeurs : iddeveloppeur={Id}, nom={Nom}, prenom={Prenom}, tel={Tel}, mail={Mail}, idprofil={IdProfil}, profil={Profil}",
+                       record[0], record[1], record[2], record[3], record[4], record[5], record[6]);
+
                             Profil profil = new Profil((int)record[5], (string)record[6]);
                             Developpeur developpeur = new Developpeur((int)record[0], (string)record[1], (string)record[2],
                                 (string)record[3], (string)record[4], profil);
@@ -102,9 +107,9 @@ namespace habilitations2024.dal
                         }
                     }
                 }
-                catch (Exception e)
+                catch (Exception ex)
                 {
-                    Console.WriteLine(e.Message);
+                    Log.Error(ex, "DeveloppeurAccess.GetLesDeveloppeurs : catch erreur = {Erreur}, req={Requete}", ex.Message, req);
                     Environment.Exit(0);
                 }
             }

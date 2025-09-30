@@ -1,4 +1,5 @@
 ﻿using habilitations2024.bddmanager;
+using Serilog;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -35,8 +36,9 @@ namespace habilitations2024.dal
             {
                 Manager = BddManager.GetInstance(connectionString);
             }
-            catch (Exception)
+            catch (Exception e)
             {
+                Log.Fatal(e, "Access.Access : catch erreur = {Erreur}, connectionString={ConnectionString}", e.Message, connectionString);
                 Environment.Exit(0);
             }
         }
