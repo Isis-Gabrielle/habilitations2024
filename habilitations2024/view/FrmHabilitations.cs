@@ -24,15 +24,19 @@ namespace habilitations2024.view
         /// <summary>
         /// Objet pour gérer la liste des développeurs
         /// </summary>
-        private BindingSource bdgDeveloppeurs = new BindingSource();
+        private readonly BindingSource bdgDeveloppeurs = new BindingSource();
         /// <summary>
         /// Objet pour gérer la liste des profils
         /// </summary>
-        private BindingSource bdgProfils = new BindingSource();
+        private readonly BindingSource bdgProfils = new BindingSource();
         /// <summary>
         /// Controleur de la fenêtre
         /// </summary>
         private FrmHabilitationsController controller;
+        /// <summary>
+        /// Titre des fenêtres d'information
+        /// </summary>
+        private readonly String titreFenetreInformation = "Information";
 
         /// <summary>
         /// construction des composants graphiques et appel des autres initialisations
@@ -54,7 +58,6 @@ namespace habilitations2024.view
             RemplirListeProfils();
             EnCourseModifDeveloppeur(false);
             EnCoursModifPwd(false);
-            cmbProfilsFiltre.SelectedIndex = 0;
         }
 
         /// <summary>
@@ -78,9 +81,6 @@ namespace habilitations2024.view
             List<Profil> lesProfils = controller.GetLesProfils();
             bdgProfils.DataSource = lesProfils;
             cboProfil.DataSource = bdgProfils;
-            Profil profilVide = new Profil(0, "");
-            lesProfils.Insert(0, profilVide);
-            cmbProfilsFiltre.DataSource = lesProfils;
         }
 
         /// <summary>
@@ -102,7 +102,7 @@ namespace habilitations2024.view
             }
             else
             {
-                MessageBox.Show("Une ligne doit être sélectionnée.", "Information");
+                MessageBox.Show("Une ligne doit être sélectionnée.", titreFenetreInformation);
             }
         }
 
@@ -124,7 +124,7 @@ namespace habilitations2024.view
             }
             else
             {
-                MessageBox.Show("Une ligne doit être sélectionnée.", "Information");
+                MessageBox.Show("Une ligne doit être sélectionnée.", titreFenetreInformation);
             }
         }
 
@@ -141,7 +141,7 @@ namespace habilitations2024.view
             }
             else
             {
-                MessageBox.Show("Une ligne doit être sélectionnée.", "Information");
+                MessageBox.Show("Une ligne doit être sélectionnée.", titreFenetreInformation);
             }
         }
 
@@ -175,7 +175,7 @@ namespace habilitations2024.view
             }
             else
             {
-                MessageBox.Show("Tous les champs doivent être remplis.", "Information");
+                MessageBox.Show("Tous les champs doivent être remplis.", titreFenetreInformation);
             }
         }
 
@@ -202,14 +202,21 @@ namespace habilitations2024.view
         {
             if (!txtPwd1.Text.Equals("") && !txtPwd2.Text.Equals("") && txtPwd1.Text.Equals(txtPwd2.Text))
             {
-                Developpeur developpeur = (Developpeur)bdgDeveloppeurs.List[bdgDeveloppeurs.Position];
-                developpeur.Pwd = txtPwd1.Text;
-                controller.UpdatePwd(developpeur);
-                EnCoursModifPwd(false);
+                if (controller.PwdFort(txtPwd1.Text))
+                {
+                    Developpeur developpeur = (Developpeur)bdgDeveloppeurs.List[bdgDeveloppeurs.Position];
+                    developpeur.Pwd = txtPwd1.Text;
+                    controller.UpdatePwd(developpeur);
+                    EnCoursModifPwd(false);
+                }
+                else
+                {
+                    MessageBox.Show("Le pwd doit contenir entre 8 et 30 caractères constitués de : au moins une minuscule, une majuscule, un chiffre, un caractère spécial et pas d'espace", "Information");
+                }
             }
             else
             {
-                MessageBox.Show("Les 2 zones doivent être remplies et de contenu identique", "Information");
+                MessageBox.Show("Les 2 zones doivent être remplies et de contenu identique", titreFenetreInformation);
             }
         }
 
@@ -258,17 +265,5 @@ namespace habilitations2024.view
             txtPwd2.Text = "";
         }
 
-        private void cmbProfilsFiltre_SelectedIndexChanged(object sender, EventArgs e)
-        {
-            if (cmbProfilsFiltre.SelectedItem is Profil filtreProfil && filtreProfil.Idprofil != 0)
-            {
-                bdgDeveloppeurs.DataSource = controller.GetLesDeveloppeurs(filtreProfil);
-            }
-            else
-            {
-                bdgDeveloppeurs.DataSource = controller.GetLesDeveloppeurs();
-            }
-            dgvDeveloppeurs.DataSource = bdgDeveloppeurs;
-        }
     }
 }

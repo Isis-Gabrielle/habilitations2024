@@ -41,7 +41,7 @@ CREATE TABLE developpeur (
   mail varchar(50) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   pwd varchar(64) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   idprofil int NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
 -- Déchargement des données de la table developpeur
@@ -79,7 +79,7 @@ DROP TABLE IF EXISTS fonctionnalite;
 CREATE TABLE fonctionnalite (
   idfonctionnalite int NOT NULL,
   nom varchar(20) COLLATE utf8mb4_unicode_ci DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
 -- Déchargement des données de la table fonctionnalite
@@ -102,7 +102,7 @@ CREATE TABLE habilitation (
   idfonctionnalite int NOT NULL,
   idoperation int NOT NULL,
   idprofil int NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
 -- Déchargement des données de la table habilitation
@@ -147,7 +147,7 @@ DROP TABLE IF EXISTS operation;
 CREATE TABLE operation (
   idoperation int NOT NULL,
   nom varchar(20) COLLATE utf8mb4_unicode_ci DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
 -- Déchargement des données de la table operation
@@ -168,7 +168,7 @@ DROP TABLE IF EXISTS profil;
 CREATE TABLE profil (
   idprofil int NOT NULL,
   nom varchar(20) COLLATE utf8mb4_unicode_ci DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
 -- Déchargement des données de la table profil
