@@ -1,6 +1,7 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System.Collections.Generic;
 using habilitations2024.model;
+using habilitations2024.bddmanager;
 
 namespace habilitations2024.dal.Tests
 {

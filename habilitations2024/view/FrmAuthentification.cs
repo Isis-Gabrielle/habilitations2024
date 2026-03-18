@@ -42,14 +42,15 @@ namespace habilitations2024.view
         {
             String nom = txtNom.Text;
             String prenom = txtPrenom.Text;
+            String email = txtMail.Text;
             String pwd = txtPwd.Text;
-            if (String.IsNullOrEmpty(nom) || String.IsNullOrEmpty(prenom) || String.IsNullOrEmpty(pwd))
+            if (String.IsNullOrEmpty(nom) || String.IsNullOrEmpty(prenom) || String.IsNullOrEmpty(email) || String.IsNullOrEmpty(pwd))
             {
                 MessageBox.Show("Tous les champs doivent être remplis.", "Information");
             }
             else
             {
-                Admin admin = new Admin(nom, prenom, pwd);
+                Admin admin = new Admin(nom, prenom, email, pwd);
                 if (controller.ControleAuthentification(admin))
                 {
                     FrmHabilitations frm = new FrmHabilitations();
@@ -62,5 +63,34 @@ namespace habilitations2024.view
             }
         }
 
+        private void txtPrenom_TextChanged(object sender, EventArgs e)
+        {
+
+        }
+
+        private void label3_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void label2_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void label1_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void txtPwd_TextChanged(object sender, EventArgs e)
+        {
+
+        }
+
+        private void txtNom_TextChanged(object sender, EventArgs e)
+        {
+
+        }
     }
 }

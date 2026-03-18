@@ -8,6 +8,7 @@ namespace habilitations2024.model
     {
         public string Nom { get; }
         public string Prenom { get; }
+        public string Mail { get; }
         public string Pwd { get; }
 
         /// <summary>
@@ -16,10 +17,11 @@ namespace habilitations2024.model
         /// <param name="nom"></param>
         /// <param name="prenom"></param>
         /// <param name="pwd"></param>
-        public Admin(string nom, string prenom, string pwd)
+        public Admin(string nom, string prenom, string mail, string pwd)
         {
             this.Nom = nom;
             this.Prenom = prenom;
+            this.Mail = mail;
             this.Pwd = pwd;
         }
     }
